@@ -18,6 +18,7 @@ class Manager:
         self.__towers_nb: list[int] = []
         self.__planes_nb: list[int] = []
         self.__towers: list[str] = []
+        self.__towers_: list[str] = []
         self.__planes: list[str] = []
         self.__parse_args()
         self.__file: list = self.__get_file(path)
@@ -67,10 +68,11 @@ class Manager:
         for i in range(self.__towers_nb[element]):
             a = randint(0, len(tmp)-1)
             self.__towers.append(f"{tmp[a]} {randint(5, self.__data.radius)}")
+            self.__towers_.append(f"{tmp[a]}")
             tmp.pop(a)
 
     def __generate_planes(self, index: int) -> None:
-        tmp = deepcopy(self.__towers)
+        tmp = deepcopy(self.__towers_)
         for i in range(self.__planes_nb[index]):
             a = randint(1, len(tmp)-1)
             self.__planes.append(f"{tmp[a].replace('T', 'A')} {tmp[a-1].replace('T ', '')} {randint(15, 150)} {randint(0, self.__max)}")
@@ -81,6 +83,7 @@ class Manager:
             self.__generate_planes(i)
             self.__save_file(f"{self.__planes_nb[i]}_planes_{self.__towers_nb[i]}_towers.rdr")
             self.__towers = []
+            self.__towers_ = []
             self.__planes = []
 
 if __name__ == "__main__":
