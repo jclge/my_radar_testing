@@ -66,7 +66,7 @@ class Manager:
         tmp = deepcopy(self.__file)
         for i in range(self.__towers_nb[element]):
             a = randint(0, len(tmp)-1)
-            self.__towers.append(tmp[a])
+            self.__towers.append(f"{tmp[a]} {randint(5, self.__data.radius)}")
             tmp.pop(a)
 
     def __generate_planes(self, index: int) -> None:
