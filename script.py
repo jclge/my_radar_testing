@@ -12,16 +12,17 @@ class Data:
     floating: bool
     number: int
     seed: int
+    path: str
 
 class Manager:
-    def __init__(self, path: str) -> None:
+    def __init__(self) -> None:
         self.__towers_nb: list[int] = []
         self.__planes_nb: list[int] = []
         self.__towers: list[str] = []
         self.__towers_: list[str] = []
         self.__planes: list[str] = []
         self.__parse_args()
-        self.__file: list = self.__get_file(path)
+        self.__file: list = self.__get_file(self.__data.path)
         self.__rand_env()
         self.__generate()
 
@@ -37,8 +38,9 @@ class Manager:
         parser.add_argument('-f', '--float', metavar="Float Coordinates", default=False, choices=[True, False], dest="float", help="Can coordinates contain floating numbers", type=bool)
         parser.add_argument('-n', '--number', metavar="Number of files generated", default=1, choices=range(1,100), dest="number", help="Turns -t & -p as maximum values and generates n .rdr files.", type=int)
         parser.add_argument('-s', '--seed', metavar="Seed to use to generate", default=None, dest="seed", help="Seed that will be used for any random calculation", type=int)
+        parser.add_argument('-pa', '--path', metavar="Custom path to the towers' file.", default=".towers_pos", dest="path", help="Custom path to the towers' file.", type=str)
         res = parser.parse_args()
-        self.__data = Data(planes=res.planes, towers=res.towers, radius=res.radius, floating=res.float, number=res.number, seed=res.seed)
+        self.__data = Data(planes=res.planes, towers=res.towers, radius=res.radius, floating=res.float, number=res.number, seed=res.seed, path=res.path)
 
     def __rand_env(self) -> None:
         self.__max = 0
@@ -87,4 +89,4 @@ class Manager:
             self.__planes = []
 
 if __name__ == "__main__":
-    m = Manager(".towers_pos")
+    m = Manager()
