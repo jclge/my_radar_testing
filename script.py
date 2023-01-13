@@ -60,7 +60,7 @@ class Manager:
     def __save_file(self, name: str) -> None:
         a = '\n'.join(self.__towers) + '\n' + '\n'.join(self.__planes)
         with open(name, 'w') as o:
-            o.write(a)
+            o.write(f"{a}\n")
             o.close()
 
     def __generate_towers(self, element: int) -> None:
