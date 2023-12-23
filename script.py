@@ -288,7 +288,7 @@ class Planes:
         This class, in case of re-write of this code,
         is meant to be re-usable unlike the Towers one.
         Just call the generate_planes method to 're-do'
-        the calculations. Please note that their is no
+        the calculations. Please note that there is no
         built-in method to provide a new Data object.
         """
         self.__planes: list[list[Union[int, float]]] = []
