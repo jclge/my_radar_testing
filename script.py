@@ -186,7 +186,7 @@ class Towers:
         for each file and therefore destroying the object each use
         is clearer and eases the readability
         """
-        self._towers: list[list[int]] = None
+        self._towers: list[list[int]] = []
         self.__towers_generation(path, nb)
         self.__radius_generation(radius)
 
@@ -196,7 +196,7 @@ class Towers:
         """
         return '\n'.join(['T ' + ' '.join(map(str, tower)) for tower in self._towers])
 
-    def __get_towers_file(self, path) -> list[str]:
+    def __get_towers_file(self, path: str) -> list[list[int]]:
         """
         Retrives the towers in a file passed as argument
 
@@ -359,13 +359,13 @@ class Planes:
             res.append(randint(0, pix))
         return res
 
-    def __floating_takeoff(self, index, time_s) -> None:
+    def __floating_takeoff(self, index: int, time_s: float) -> None:
         """
         Adds takeoff time to a given plane as a floating number.
         """
         self.__planes[index].append(time_s)
 
-    def __integer_takeoff(self, index, time_s) -> None:
+    def __integer_takeoff(self, index: int, time_s: float) -> None:
         """
         Adds takeoff time to a given plane as an integer.
         """
@@ -384,7 +384,7 @@ class Planes:
         to see 10 planes on the screen at the same time, with
         a 10s delay, you should ask for a hundred planes.
         """
-        res: int = 0
+        res: float = 0
 
         for i in range(self.__nb_planes):
             self.__planes.append(self.__spawns())
