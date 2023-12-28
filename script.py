@@ -414,9 +414,9 @@ class Manager:
         self._data: Data = args
         seed(self._data.seed)
 
-    def generate_file(self) -> None:
+    def generate_content(self) -> None:
         """
-        Main method to generate the file.
+        Main method to generate the content of the file.
 
         Generates the towers, then the planes, giving
         each the necessary data as argument.
@@ -458,5 +458,5 @@ if __name__ == "__main__":
     """
     data = Parser.parse_args()
     m: Manager = Manager(data)
-    m.generate_file()
+    m.generate_content()
     m.save_to_file()
