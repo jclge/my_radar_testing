@@ -143,17 +143,17 @@ class Parser:
         parser = argparse.ArgumentParser(formatter_class=chf,
                                          description=dedent('info: Please note that this generator does not cover all the edge cases that may be tested on your project. It\'s only meant to make the generation painless and easy.'),
                                          epilog=dedent(f'usage example: python {argv[0]} -p 100 -t 8 -d 20 -f -r 5 --path ./path/to/file | This example would generate 100 planes traveling at varying velocities represented as floats between 8 towers placed based off the file given as argument, with their radius maxed at 5% of the screen size, all of that in a 20 seconds delay.'))
-        parser.add_argument('-p', '--planes', metavar="Planes", required=True, choices=range(1, 1000000), dest="planes", help="Amount of planes as an unsigned integer", type=int)
-        parser.add_argument('-t', '--towers', metavar="Towers", required=True, choices=range(2, 50), dest="towers", help="Amount of towers as an unsigned integer", type=int)
-        parser.add_argument('-r', '--radius', metavar="Radius", default=30, choices=range(5, 100), dest="radius", help="Percentage of the screen taken as a maximum value for the radius of the towers as an unsigned integer", type=int)
+        parser.add_argument('-p', '--planes', metavar='Planes', required=True, choices=range(1, 1000000), dest='planes', help='Amount of planes as an unsigned integer', type=int)
+        parser.add_argument('-t', '--towers', metavar='Towers', required=True, choices=range(2, 50), dest='towers', help='Amount of towers as an unsigned integer', type=int)
+        parser.add_argument('-r', '--radius', metavar='Radius', default=30, choices=range(5, 100), dest='radius', help='Percentage of the screen taken as a maximum value for the radius of the towers as an unsigned integer', type=int)
         parser.add_argument('-d', '--duration', metavar='Duration', default=30, dest='duration', help='Time in seconds after which no plane will spawn. Planes will spawn in an uniform way from t0 to tn.', type=int)
         parser.add_argument('-f', '--float', action='store_true', dest="float", help="Can coordinates contain floating numbers")
         parser.add_argument('-S', '--towers_spawn', action='store_false', dest="spawn", help='Will planes spawn at random or on towers. Defaults on towers.')
-        parser.add_argument('-M', '--max_speed', metavar='Max planes\' speed', default=150, dest="max_speed", help="Caps the speed of the planes to a given integer.", type=int)
-        parser.add_argument('-m', '--min_speed', metavar='Min planes\' speed', default=15, dest="min_speed", help="Sets the minimal speed of the planes to a given integer.", type=int)
-        parser.add_argument('-s', '--seed', metavar="Random seed", default=None, dest="seed", help="Seed that will be used for any random calculation", type=int)
-        parser.add_argument('-P', '--path', metavar="Path to custom towers' file", default=None, dest="path", help="Custom path to the towers' file.", type=str)
-        parser.add_argument('-o', '--output', metavar="Output Path", default='nb_planes_nb_towers.rdr', dest='output', help='Custom path to an output file', type=str)
+        parser.add_argument('-M', '--max_speed', metavar='Max planes\' speed', default=150, dest='max_speed', help='Caps the speed of the planes to a given integer.', type=int)
+        parser.add_argument('-m', '--min_speed', metavar='Min planes\' speed', default=15, dest='min_speed', help='Sets the minimal speed of the planes to a given integer.', type=int)
+        parser.add_argument('-s', '--seed', metavar='Random seed', default=None, dest='seed', help='Seed that will be used for any random calculation', type=int)
+        parser.add_argument('-P', '--path', metavar='Path to custom towers\' file', default=None, dest='path', help='Custom path to the towers\' file.', type=str)
+        parser.add_argument('-o', '--output', metavar='Output Path', default='nb_planes_nb_towers.rdr', dest='output', help='Custom path to an output file', type=str)
         res: dict[Any] = parser.parse_args()
         if res.max_speed < res.min_speed:
             raise ConflictingSpeedsException(f'max_speed [{res.max_speed}] is smaller than min_speed [{res.min_speed}].')
@@ -205,13 +205,13 @@ class Towers:
         either way.
         """
         with open(path, 'r') as o:
-            tmp = o.read().split('\n')
+            file_content = o.read().split('\n')
             o.close()
         try:
-            if 'T' in tmp[0]:
-                return [list(map(int, line.replace('T ', '').split(' '))) for line in tmp]
+            if 'T' in file_content[0]:
+                return [list(map(int, line.replace('T ', '').split(' '))) for line in file_content]
             else:
-                return [list(map(int, line)) for line in tmp]
+                return [list(map(int, line)) for line in file_content]
         except Exception:
             raise BadTowersFileFormatException('File should either be a list of positions separated by spaces & newlines or in the same format as a .rdr file excluding radius.')
 
@@ -457,6 +457,6 @@ if __name__ == "__main__":
     the current classes or modify the current ones.
     """
     data = Parser.parse_args()
-    m: Manager = Manager(data)
+    m = Manager(data)
     m.generate_content()
     m.save_to_file()
